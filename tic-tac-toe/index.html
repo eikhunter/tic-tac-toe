@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Tic Tac Toe Game</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <h1>
+      Tic Tac Toe
+    </h1>
+    <div class="text messages"></div>
+    <div class="text turn"></div>
+
+    <table class="panel" id="js-Panel">
+      <tr class="table-row">
+<<<<<<< HEAD
+        <td class="item item1"></td>
+        <td class="item item2"></td>
+        <td class="item item3"></td>
+      </tr>
+      <tr class="table-row">
+        <td class="item item4"></td>
+        <td class="item item5"></td>
+        <td class="item item6"></td>
+      </tr>
+      <tr class="table-row">
+        <td class="item item7"></td>
+        <td class="item item8"></td>
+        <td class="item item9"></td>
+=======
+        <td class="item item1" value="11"></td>
+        <td class="item item2" value="12"></td>
+        <td class="item item3" value="13"></td>
+      </tr>
+      <tr class="table-row">
+        <td class="item item4" value="21"></td>
+        <td class="item item5" value="22"></td>
+        <td class="item item6" value="23"></td>
+      </tr>
+      <tr class="table-row">
+        <td class="item item7" value="31"></td>
+        <td class="item item8" value="32"></td>
+        <td class="item item9" value="33"></td>
+>>>>>>> Update so the game has computer vs player features
+      </tr>
+    </table>
+    <button id="reset" type="button" class="link link-reset">
+      Restart
+    </button>
+    <div class="text time"></div>
+    <h3 class="text stats">Current game stats</h3>
+    <div class="stats-box">
+      <div class="stats-items">
+        <div class="stats-item">
+          <h4 class="stat-title">Number of moves per go</h4>
+<<<<<<< HEAD
+          <div class="recordmoves1">Player 1 - 0</div>
+          <div class="recordmoves2">Player 2 - 0</div>
+        </div>
+        <div class="stats-item">
+          <h4 class="stat-title">Average time taken per move</h4>
+          <div class="recordtime1">Player 1 - 0s</div>
+          <div class="recordtime2">Player 2 - 0s</div>
+=======
+          <div class="recordmoves1">Player - 0</div>
+          <div class="recordmoves2">Computer - 0</div>
+        </div>
+        <div class="stats-item">
+          <h4 class="stat-title">Average time taken per move</h4>
+          <div class="recordtime1">Player - 0s</div>
+          <div class="recordtime2">Computer - 0s</div>
+>>>>>>> Update so the game has computer vs player features
+        </div>
+      </div>
+    </div>
+    <br />
+    <button type="button" id="total" class="link link-modal" data-toggle="modal" data-target="#myModal">
+      Championship score
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Championship scores</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /********************************************/
+      /* @author : Pauline Ghiazza                */
+      /* @author site : www.paulineghiazza.fr     */
+      /********************************************/
+      var aryState = [[0,0,0],[0,0,0],[0,0,0]];
+      var player = 1;
+      var turn = $('.turn');
+      var table = $('table');
+      var messages = $('.messages');
+      var recordmoves1 = $('.recordmoves1');
+      var recordmoves2 = $('.recordmoves2');
+      var recordtime1 = $('.recordtime1');
+      var recordtime2 = $('.recordtime2');
+      var time = $('.time');
+      var min = 0,sec = 0;
+      var recordM = 0;
+      var recordC = 0;
+<<<<<<< HEAD
+      var cTimeM =0;
+      var cTimeC = 0;
+      var winM = 0;
+      var winC = 0;
+      var avgTime1 =0;
+      var avgTime2 = 0;
+      var totalText = "<h3 class='player-title'>Player 1 - 0</h3><h3 class='player-title'>Player 2 - 0</h3>";
+=======
+      var cTimeM = 0;
+      var cTimeC = 0;
+      var winM = 0;
+      var winC = 0;
+      var avgTime1 = 0;
+      var avgTime2 = 0;
+      var preTime = Date.now();
+      var nowTime = 0;
+      var totalText = "<h3 class='player-title'>Player - 0</h3><h3 class='player-title'>Computer - 0</h3>";
+
+
+      var myway, mynextmove;
+      var tmp, done, iswon, content;
+      var moves=new Array();
+      var game=new Array(9);
+      var choices=[11,12,13,21,22,23,31,32,33];
+      var corners=[11,13,31,33];
+      var ways=new Array();
+
+      ways[1]=[0,11,12,13];
+      ways[2]=[0,21,22,23];
+      ways[3]=[0,31,32,33];
+      ways[4]=[0,11,21,31];
+      ways[5]=[0,12,22,32];
+      ways[6]=[0,13,23,33];
+      ways[7]=[0,11,22,33];
+      ways[8]=[0,13,22,31];
+>>>>>>> Update so the game has computer vs player features
+
+      if (!window.showModalDialog) {
+        window.showModalDialog = function (arg1, arg2, arg3) {
+
+          var w;
+          var h;
+          var resizable = "no";
+          var scroll = "no";
+          var status = "no";
+
+          // get the modal specs
+          var mdattrs = arg3.split(";");
+          for (i = 0; i < mdattrs.length; i++) {
+            var mdattr = mdattrs[i].split(":");
+
+            var n = mdattr[0];
+            var v = mdattr[1];
+            if (n) { n = n.trim().toLowerCase(); }
+            if (v) { v = v.trim().toLowerCase(); }
+
+            if (n == "dialogheight") {
+              h = v.replace("px", "");
+            } else if (n == "dialogwidth") {
+              w = v.replace("px", "");
+            } else if (n == "resizable") {
+              resizable = v;
+            } else if (n == "scroll") {
+              scroll = v;
+            } else if (n == "status") {
+              status = v;
+            }
+          }
+
+          var left = window.screenX + (window.outerWidth / 2) - (w / 2);
+          var top = window.screenY + (window.outerHeight / 2) - (h / 2);
+          var targetWin = window.open(arg1, arg1, 'toolbar=no, location=no, directories=no, status=' + status + ', menubar=no, scrollbars=' + scroll + ', resizable=' + resizable + ', copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+          targetWin.focus();
+        };
+      }
+<<<<<<< HEAD
+      function showTime() {
+        var m = min,s = sec;
+        sec++;
+        if (sec == 60) {
+          sec = 0;
+          min++;
+        };
+
+        if (min < 11) {
+          m = "0" + min;
+        }
+        if (sec < 11) {
+          s = "0" + sec;
+        };
+        // temp = m + " : " + s;
+        time.html(m + " : "+s);
+        if( player == 1)
+          cTimeM ++;
+        else
+          cTimeC ++;
+      }
+      setInterval(showTime, 1000);
+
+
+
+      $(function() {
+        displayNextPlayer(turn, player);
+        $('td').click(function() {
+
+          td = $(this);
+          var state = getState(td);
+          if (player == 1) {
+            recordC++;
+          }else{
+            recordM++;
+
+          }
+
+          if( recordM != "0" )
+            avgTime1 = Math.floor(cTimeM / recordM*10)/10;
+          if( recordC != "0" )
+            avgTime2 = Math.floor(cTimeC / recordC*10)/10;
+
+          if(!state) {
+            var pattern = definePatternForCurrentPlayer(player);
+            changeState(td, pattern);
+            recordmoves1.html("Player 1 - " + recordC);
+            recordmoves2.html("Player 2 - " + recordM);
+            recordtime1.html("Player 1 - " + avgTime1  + 's');
+            recordtime2.html("Player 2 - " + avgTime2 + 's');
+
+            if(checkIfPlayerWon(table, pattern)) {
+              messages.html('Player '+player+' has won.');
+              turn.html('');
+              if (player == 1) {
+                winM++;
+                totalText = "<h3> Player 1 Wins:" + winM + ", Player 2 Wins:" + winC + "</h3>";
+              } else {
+                winC++;
+                totalText = "<h3> Player 1 Wins:" + winM + ", Player 2 Wins:" + winC + "</h3>";
+              }
+            } else {
+              player = setNextPlayer(player);
+              displayNextPlayer(turn, player);
+            }
+          } else {
+            messages.html('This box is already checked.');
+=======
+
+      function showTime() {
+        var elapsedTime = Date.now() - preTime;
+        time.html((elapsedTime / 1000).toFixed(3));
+        if( player == 1)
+          cTimeM = elapsedTime;
+        else
+          cTimeC = elapsedTime;
+      }
+      setInterval(showTime, 10);
+
+      function pcstrategy(istowin){
+          var str=(istowin)? 2 : 1;
+          for(n=1;n<=8;n++){
+              if((moves[ways[n][1]]==str) && (moves[ways[n][2]]==str) && (moves[ways[n][3]]==0)) tmp=ways[n][3];
+              if((moves[ways[n][1]]==str) && (moves[ways[n][3]]==str) && (moves[ways[n][2]]==0)) tmp=ways[n][2];
+              if((moves[ways[n][2]]==str) && (moves[ways[n][3]]==str) && (moves[ways[n][1]]==0)) tmp=ways[n][1];
+          }
+
+      }
+
+      function selecCorner(which){
+          if (which=="empty"){
+              do{
+                  tmp=corners[Math.floor(Math.random()*4)];
+              }while(moves[tmp]!=0);
+          }
+          else
+              tmp=corners[Math.floor(Math.random()*4)];
+      }
+
+      function pcdontlose(){
+
+           if (done==1){
+              if (game[0]==11 || game[0]==13 || game[0]==31 || game[0]==33){
+                  tmp=22;
+                  myway=1;
+              }
+              else if (game[0]==22){
+                  selecCorner("any");
+                  myway=2;
+              }else{
+                  tmp=22;
+                  myway=3;
+              }}
+          else if (done==3){
+              if (myway==1){
+                  if (game[2]==44-game[0])
+                      tmp=choices[1+(2*Math.floor(Math.random()*4))];
+                  else
+                      tmp=44-game[0]
+              }
+              else if (myway==2){
+                  if (game[2]==44-game[1])
+                      selecCorner("empty");
+              }
+              else if (myway==3){
+                  if (game[2]==11 || game[2]==13 || game[2]==31 || game[2]==33)   tmp=44-game[2];
+
+                  dlta=22-game[2];
+                  tmp=22+(10/dlta);
+                  mynextmove=tmp+dlta;
+
+                  if (game[2]==44-game[0]){
+                      dlta=22-game[2];
+                      tmp=22+(10/dlta);
+                      mynextmove=tmp+dlta;
+                  }
+                  else{
+                      dlta=22-game[0];
+                      op0=game[0]+(10/dlta);
+                      op1=game[0]-(10/dlta);
+                      op2=game[2]+dlta;
+                      tmp=eval("op"+Math.floor(Math.random()*3));
+                  }
+              }
+           }
+          else if (done==5 && myway==3){
+              tmp=mynextmove;
+          }
+          console.log("done="+done+"---myway="+myway+"---tmp="+tmp);
+      }
+
+
+      function pcrandom(){
+          for(i=0;i<choices.length;i++){
+              tmp = choices[i];
+              if( moves[tmp] == 0)  break;
+          }
+      }
+
+      function pcturn(){
+          tmp='00';
+          pcstrategy(true);
+          if(tmp=='00') pcstrategy(false);
+          if(tmp=='00') pcdontlose();
+          if(tmp=='00') pcrandom();
+          moves[tmp]=2;
+          game[done]=tmp;
+
+          done++;
+          return tmp;
+      }
+
+      $(function() {
+        done=0; iswon = false;
+        moves[11]=0; moves[12]=0; moves[13]=0; moves[21]=0; moves[22]=0; moves[23]=0; moves[31]=0; moves[32]=0; moves[33]=0;
+        for(i=0;i<=8;i++){
+            game[i]=0;
+        }
+
+        displayNextPlayer(turn, player);
+        $('td').click(function() {
+          if(iswon) retun;
+          td = $(this);
+          cellnum = td.attr("value");
+
+          var state = getState(td);
+
+          recordM++;
+          if( recordM != "0" )
+            avgTime1 = (cTimeM / recordM /1000).toFixed(3);
+
+
+          if(!state && !iswon) {
+              preTime = Date.now();
+            messages.html('');
+            var pattern = definePatternForCurrentPlayer(player);
+
+            changeState(td, pattern);
+
+            recordmoves1.html("Player - " + recordM);
+            recordtime1.html("Player - " + avgTime1  + 's');
+
+            //computer move
+            moves[cellnum]=1;
+            game[done]=cellnum;
+            done++;
+
+            if(checkIfPlayerWon(table, pattern)) {
+                messages.html('Player has won.');
+                iswon = true;
+                turn.html('');
+                winM++;
+                totalText = "<h3> Player Wins:" + winM + ", Computer Wins:" + winC + "</h3>";
+
+            } else {
+                if(done>8){
+                    messages.html('This game is a draw.');
+                    iswon = true
+                    turn.html('');
+                }else {
+                    recordC++;
+                    if( recordC != "0" )
+                        avgTime2 = (cTimeC / recordC /1000).toFixed(3);
+
+                    recordmoves2.html("Computer - " + recordC);
+                    recordtime2.html("Computer - " + avgTime2 + 's');
+
+                    pcturn();
+                    pattern = definePatternForCurrentPlayer(2);
+                    table.find('td').each(function () {
+                        if ($(this).attr("value") == tmp) {
+                            changeState($(this), pattern);
+                        }
+                    });
+
+                    if (checkIfPlayerWon(table, pattern)) {
+                        messages.html('Computer has won.');
+                        turn.html('');
+                        iswon = true;
+                        winC++;
+                        totalText = "<h3> Player Wins:" + winM + ", Computer Wins:" + winC + "</h3>";
+
+                    } else {
+                        player = 1;
+                        displayNextPlayer(turn, player);
+                    }
+                }
+            }
+
+
+          } else {
+            messages.html('This box is already checked.');
+              turn.html('');
+>>>>>>> Update so the game has computer vs player features
+          }
+        });
+
+        $('#reset').click(function() {
+          player = 1;
+<<<<<<< HEAD
+          messages.html('');
+          cTimeM = cTimeC = avgTime1 = avgTime2 = 0;
+          reset(table);
+          displayNextPlayer(turn, player);
+        });
+=======
+          iswon = false;
+          messages.html('');
+          preTime = Date.now();
+          cTimeM = cTimeC = avgTime1 = avgTime2 = recordC = recordM = 0;
+          reset(table);
+          displayNextPlayer(turn, player);
+        });
+
+>>>>>>> Update so the game has computer vs player features
+        $('#total').click(function() {
+
+          $(".modal-body").html(totalText);
+
+        });
+      });
+
+      function getState(td) {
+        if(td.hasClass('cross') || td.hasClass('circle')) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+
+      function changeState(td, pattern) {
+        return td.addClass(pattern);
+      }
+
+      function definePatternForCurrentPlayer(player) {
+        if(player == 1) {
+          return 'cross';
+        } else {
+          return 'circle';
+        }
+      }
+
+<<<<<<< HEAD
+      function setNextPlayer(player) {
+        if(player == 1) {
+          return player = 2;
+        } else {
+          return player = 1;
+        }
+      }
+
+      function displayNextPlayer(turn, player) {
+        turn.html('Person '+player);
+=======
+      function displayNextPlayer(turn, player) {
+          if(player == 1)
+              turn.html('Person');
+          else
+              turn.html('Computer');
+>>>>>>> Update so the game has computer vs player features
+      }
+
+      function checkIfPlayerWon(table, pattern) {
+        var won = 0;
+        if(table.find('.item1').hasClass(pattern) && table.find('.item2').hasClass(pattern) && table.find('.item3').hasClass(pattern)) {
+          $('#js-Panel').addClass('win-1-3');
+          won = 1;
+        } else if (table.find('.item1').hasClass(pattern) && table.find('.item4').hasClass(pattern) && table.find('.item7').hasClass(pattern)) {
+          $('#js-Panel').toggleClass('win-1-7');
+          won = 1;
+        } else if (table.find('.item1').hasClass(pattern) && table.find('.item5').hasClass(pattern) && table.find('.item9').hasClass(pattern)) {
+          $('#js-Panel').toggleClass('win-1-9');
+          won = 1;
+        } else if (table.find('.item4').hasClass(pattern) && table.find('.item5').hasClass(pattern) && table.find('.item6').hasClass(pattern)) {
+          $('#js-Panel').toggleClass('win-4-6');
+          won = 1;
+        } else if (table.find('.item7').hasClass(pattern) && table.find('.item8').hasClass(pattern) && table.find('.item9').hasClass(pattern)) {
+          $('#js-Panel').toggleClass('win-7-9');
+          won = 1;
+        } else if (table.find('.item2').hasClass(pattern) && table.find('.item5').hasClass(pattern) && table.find('.item8').hasClass(pattern)) {
+          $('#js-Panel').toggleClass('win-2-8');
+          won = 1;
+        } else if (table.find('.item3').hasClass(pattern) && table.find('.item6').hasClass(pattern) && table.find('.item9').hasClass(pattern)) {
+          $('#js-Panel').toggleClass('win-3-9');
+          won = 1;
+        } else if (table.find('.item3').hasClass(pattern) && table.find('.item5').hasClass(pattern) && table.find('.item7').hasClass(pattern)) {
+          $('#js-Panel').toggleClass('win-3-7');
+          won = 1;
+        }
+
+        return won;
+      }
+
+      function reset(table) {
+<<<<<<< HEAD
+        table.find('td').each(function() {
+          $(this).removeClass('circle').removeClass('cross').removeClass('2');
+        });
+        for (var i = 0; i < aryState.length; i++) {
+          aryState[i] = 0;
+        };
+        $(table).removeClass('win-3-7').removeClass('win-3-9').removeClass('win-2-8').removeClass('win-7-9').removeClass('win-4-6').removeClass('win-1-9').removeClass('win-1-9').removeClass('win-1-7').removeClass('win-1-3');
+        recordC = 0;
+        recordM = 0;
+        min = 0,sec = 0;
+      }
+=======
+          table.find('td').each(function() {
+            $(this).removeClass('circle').removeClass('cross').removeClass('2');
+          });
+          for (var i = 0; i < aryState.length; i++) {
+            aryState[i] = 0;
+          };
+          $(table).removeClass('win-3-7').removeClass('win-3-9').removeClass('win-2-8').removeClass('win-7-9').removeClass('win-4-6').removeClass('win-1-9').removeClass('win-1-9').removeClass('win-1-7').removeClass('win-1-3');
+          recordC = 0;
+          recordM = 0;
+          min = 0;
+          sec = 0;
+
+          done=0;
+          moves[11]=0; moves[12]=0; moves[13]=0; moves[21]=0; moves[22]=0; moves[23]=0; moves[31]=0; moves[32]=0; moves[33]=0;
+          for(i=0;i<=8;i++){
+              game[i]=0;
+          }
+      }
+
+>>>>>>> Update so the game has computer vs player features
+    </script>
+  </body>
